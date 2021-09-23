@@ -20,7 +20,7 @@ namespace RestWithASPNET.Controllers
         }
 
         [HttpGet("sum/{firstNumber}/{secondNumber}")]
-        public IActionResult Get(string firstNumber, string secondNumber)
+        public IActionResult Sum(string firstNumber, string secondNumber)
         {
             if(IsNumber(firstNumber) && IsNumber(secondNumber))
             {
@@ -49,6 +49,80 @@ namespace RestWithASPNET.Controllers
                 NumberFormatInfo.InvariantInfo,
                 out double number
                 );
+        }
+
+        [HttpGet("sub/{firstNumber}/{secondNumber}")]
+        public IActionResult Sub(string firstNumber, string secondNumber)
+        {
+            if(IsNumber(firstNumber) && IsNumber(secondNumber))
+            {
+                var result = ConvertToDecimal(firstNumber) - ConvertToDecimal(secondNumber);
+                return Ok(result.ToString());
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("mult/{firstNumber}/{secondNumber}")]
+        public IActionResult Mult(string firstNumber, string secondNumber)
+        {
+            if (IsNumber(firstNumber) && IsNumber(secondNumber))
+            {
+                var result = ConvertToDecimal(firstNumber) * ConvertToDecimal(secondNumber);
+                return Ok(result.ToString());
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("div/{firstNumber}/{secondNumber}")]
+        public IActionResult Div(string firstNumber, string secondNumber)
+        {
+            if (IsNumber(firstNumber) && IsNumber(secondNumber) && IsZero(secondNumber))
+            {
+                var result = ConvertToDecimal(firstNumber) / ConvertToDecimal(secondNumber);
+                return Ok(result.ToString());
+            }
+            return BadRequest();
+        }
+
+        private bool IsZero(string secondNumber)
+        {
+            if (ConvertToDecimal(secondNumber) > 0)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        [HttpGet("ave/{num1}/{num2}")]
+        public IActionResult Mean(string num1, string num2)
+        {
+            if(IsNumber(num1) && IsNumber(num2))
+            {
+                return Ok(((ConvertToDecimal(num1) + ConvertToDecimal(num2)) / 2).ToString());
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("sqrt/{number}")]
+        public IActionResult Sqrt(string number)
+        {
+            if (IsNumber(number))
+            {
+                return Ok(Math.Sqrt(ConvertToDouble(number)).ToString());
+            }
+            
+            return BadRequest();
+        }
+
+        private double ConvertToDouble(string num)
+        {
+            double doubleValue;
+            if (double.TryParse(num, out doubleValue))
+            {
+                return doubleValue;
+            }
+            return 0;
         }
     }
 }
