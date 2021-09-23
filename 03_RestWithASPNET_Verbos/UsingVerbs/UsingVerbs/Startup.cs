@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UsingVerbs.Services;
+using UsingVerbs.Services.Implementations;
 
 namespace UsingVerbs
 {
@@ -28,6 +30,8 @@ namespace UsingVerbs
         {
 
             services.AddControllers();
+            //Dependency Injection
+            services.AddScoped<IPersonService, PersonServiceImplementation>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UsingVerbs", Version = "v1" });

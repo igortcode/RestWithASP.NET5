@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UsingVerbs.Model;
 
-namespace UsingVerbs.Services.Implementations
+namespace UsingVerbs.Services
 {
-    public interface IPersonServices 
+    public interface IPersonService 
     {
         Person Create(Person person);
         Person FindById(long id);
